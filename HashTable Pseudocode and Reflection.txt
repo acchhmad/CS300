@@ -1,0 +1,49 @@
+Hash Table – Pseudocode & Reflection
+===========================================
+
+Pseudocode
+-----------
+Insert(bid)
+  key ← Hash(bid.id)
+  if table[key] is empty
+      table[key] ← new Node(bid)
+  else
+      node ← new Node(bid)
+      node.next ← table[key]
+      table[key] ← node
+
+Search(bidId)
+  key ← Hash(bidId)
+  node ← table[key]
+  while node not null
+      if node.bid.id = bidId → return node.bid
+      node ← node.next
+  return empty bid
+
+Remove(bidId)
+  key ← Hash(bidId)
+  prev ← null
+  node ← table[key]
+  while node not null
+      if node.bid.id = bidId
+          if prev is null → table[key] ← node.next
+          else → prev.next ← node.next
+          delete node
+          return
+      prev ← node
+      node ← node.next
+
+PrintAll()
+  for each index i in table
+      node ← table[i]
+      while node not null
+          print "Key i:" bid info
+          node ← node.next
+
+Reflection
+-----------
+I built the hash table using separate chaining, where each index in the table holds a linked list of bids that share the same hash key. 
+This keeps insertions and lookups fast even when collisions occur. The hash function is a simple variation of djb2, which distributes 
+text keys well. The hardest part was handling removal cleanly while maintaining pointer links. Once I verified each bucket cleared 
+correctly in the destructor, the memory management worked smoothly. The table prints keys in order so collisions can be seen, which 
+matches the example output from the instructions.

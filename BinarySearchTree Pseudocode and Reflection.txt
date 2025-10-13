@@ -1,0 +1,56 @@
+Binary Search Tree – Pseudocode & Reflection
+===========================================
+
+Pseudocode
+-----------
+Insert(bid)
+  if root is null:
+      root ← new Node(bid)
+  else:
+      addNode(root, bid)
+
+addNode(node, bid)
+  if bid.id < node.bid.id:
+      if node.left is null → node.left ← new Node(bid)
+      else addNode(node.left, bid)
+  else:
+      if node.right is null → node.right ← new Node(bid)
+      else addNode(node.right, bid)
+
+Search(id)
+  current ← root
+  while current not null:
+      if id = current.bid.id → return current.bid
+      if id < current.bid.id → current ← current.left
+      else current ← current.right
+  return empty bid
+
+Remove(id)
+  root ← removeNode(root, id)
+
+removeNode(node, id)
+  if node is null → return null
+  if id < node.bid.id → node.left ← removeNode(node.left, id)
+  else if id > node.bid.id → node.right ← removeNode(node.right, id)
+  else:
+      if node has no children → delete node
+      else if only right → replace with node.right
+      else if only left → replace with node.left
+      else:
+          find smallest node in right subtree
+          copy its data to this node
+          delete it recursively
+  return node
+
+InOrder(node)
+  if node not null:
+      InOrder(node.left)
+      print node.bid
+      InOrder(node.right)
+
+Reflection
+-----------
+I implemented a standard binary search tree using the bid ID as the key. The structure allows fast searching, inserting, and removing. 
+The recursive approach for insertion and traversal keeps the logic simple and readable. The hardest part was the remove function, 
+which has to handle three separate cases depending on the number of children. Using the smallest node in the right subtree as the 
+replacement made that part cleaner. I also tested the search and traversal functions to confirm that the bids display in sorted order by ID.

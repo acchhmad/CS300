@@ -1,0 +1,70 @@
+Vector Sorting Assignment
+-------------------------
+
+Pseudocode
+----------
+Data
+----
+Bid: id, title, fund, amount
+bids: vector of Bid
+
+Helpers
+-------
+strToDouble(s, '$'): remove '$' and commas, return as double
+displayBid(b): print "id: title | amount | fund"
+loadBids(path, bids):
+  start timer
+  parse CSV
+  for each row:
+    make Bid from columns (0=id,1=title,4=amount,8=fund), clean amount
+    push_back into bids
+  stop timer and print ticks + seconds
+
+Selection sort (by title)
+-------------------------
+for i from 0 to n-2:
+  minIdx = i
+  for j from i+1 to n-1:
+    if bids[j].title < bids[minIdx].title:
+      minIdx = j
+  if minIdx != i: swap(bids[i], bids[minIdx])
+
+Quicksort (by title)
+--------------------
+partition(bids, begin, end):
+  pivot = title at middle index
+  left = begin, right = end
+  loop:
+    move left rightward while title[left] < pivot
+    move right leftward while title[right] > pivot
+    if left >= right: return right
+    swap(bids[left], bids[right]); left++; right--
+
+quickSort(bids, begin, end):
+  if begin >= end: return
+  p = partition(bids, begin, end)
+  quickSort(bids, begin, p)
+  quickSort(bids, p+1, end)
+
+Menu
+----
+loop until choice == 9:
+  show menu
+  1: bids.clear(); loadBids(csvPath, bids)
+  2: display Bid for each in bids
+  3: time selectionSort(bids); print ticks + seconds
+  4: if not empty: time quickSort(bids); print ticks + seconds
+  9: exit
+
+Code Reflection
+---------------
+In this assignment the goal was to load a list of bids from the CSV and compare two sorts that use the same key (title). 
+I only filled in the three required methods: selectionSort, partition, and quickSort. 
+Selection sort walks the vector and picks the smallest title for each position (O(n^2)). 
+Quicksort uses a middle pivot and two indices that move toward each other. 
+After partition returns the split point, the function recurses on both halves (average O(n log n)). 
+Both sorts run in place and only compare the title string, which matches the assignment directions.
+
+The main things I had to watch for were using the right CSV columns (id=0, title=1, amount=4, fund=8) and stripping '$' and commas from the amount so it parses. 
+I also made sure the timing matches the examples by measuring just the sort work (not printing). 
+With the large file you can clearly see selection sort take much longer than quicksort, which is the main point of the exercise.

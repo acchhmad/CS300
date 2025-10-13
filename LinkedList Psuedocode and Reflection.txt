@@ -1,0 +1,90 @@
+LinkedList Assignment
+---------------------
+
+Pseudocode
+----------
+Data structures:
+- Bid: has id, title, fund, amount
+- Node: holds one Bid and a pointer to the next Node
+- LinkedList: keeps head, tail, and size
+
+Constructor:
+  set head and tail to null
+  set size to 0
+
+Destructor:
+  go through each node from head
+  delete them one by one
+  set head and tail back to null
+
+Append(bid):
+  make a new node with the bid
+  if list is empty:
+    head and tail are the new node
+  else:
+    point current tail to new node
+    tail becomes the new node
+  increase size
+
+Prepend(bid):
+  make a new node with the bid
+  if list is empty:
+    tail is also the new node
+  else:
+    point new node to current head
+  head becomes new node
+  increase size
+
+PrintList():
+  start at head
+  while current node exists:
+    show the bid info
+    move to next node
+
+Remove(bidId):
+  if list is empty return
+  if head has the bidId:
+    move head to next
+    if it was also tail, tail = null
+    delete node
+    size--
+    return
+  otherwise walk through list with prev and cur
+  when cur has the bidId:
+    link prev to cur.next
+    if cur was tail, update tail to prev
+    delete node
+    size--
+    return
+
+Search(bidId):
+  start at head
+  walk through nodes
+  if one matches, return that bid
+  if nothing matches, return empty bid
+
+Size():
+  return size
+
+Menu flow:
+  show menu options (1 enter, 2 load, 3 display, 4 find, 5 remove, 9 exit)
+  handle input choice:
+    1: ask for bid info, put it at front, show it
+    2: load CSV bids into list using Append
+    3: print all bids
+    4: search for bid id 98109 and time how long it takes
+    5: remove bid id 98109
+    9: exit loop
+
+Code Reflection
+---------------
+In this assignment I built out a simple singly linked list to store bids from the CSV file. 
+I only worked inside the LinkedList methods that were left empty in the starter file. 
+I set up the head, tail, and size variables in the constructor and made sure the destructor clears everything out. 
+Append and Prepend add bids at the end or start of the list, PrintList just walks the list and shows each bid, 
+and Search and Remove go through the list until they find the matching ID. 
+Keeping track of both head and tail makes append and prepend fast, but search and remove still take time since they go node by node.
+
+The biggest challenge was getting Remove to work in all cases, especially when the bid being removed is at the head or when the list only has one node. 
+I also made sure to format the bid amount by stripping out symbols and commas so it would load correctly as a number. 
+Once those parts were fixed the program gave the same kind of output shown in the examples.
